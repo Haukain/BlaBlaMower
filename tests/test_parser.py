@@ -14,6 +14,13 @@ class TestParser:
 
         subfolder = "incorrect_syntax"
 
+        # Test with an empty config
+        test_config_path = os.path.join(test_configs_folder, subfolder, "empty_config")
+        parser = Parser(test_config_path)
+
+        with pytest.raises(ValueError):
+            parser.parse_config_file()
+
         # Test with incorrect number of lines in the file
         test_config_path = os.path.join(test_configs_folder, subfolder, "incorrect_number_of_lines")
         parser = Parser(test_config_path)
@@ -21,18 +28,18 @@ class TestParser:
         with pytest.raises(ValueError):
             parser.parse_config_file()
 
-    def test_parsing_incorrect_board_sizes(self):
+    def test_parsing_incorrect_lawn_sizes(self):
 
-        subfolder = "incorrect_board_sizes"
+        subfolder = "incorrect_lawn_sizes"
 
-        # Test with incorrect character in board size
+        # Test with incorrect character in lawn size
         test_config_path = os.path.join(test_configs_folder, subfolder, "incorrect_character")
         parser = Parser(test_config_path)
 
         with pytest.raises(ValueError):
             parser.parse_config_file()
 
-        # Test with missing value in board size
+        # Test with missing value in lawn size
         test_config_path = os.path.join(test_configs_folder, subfolder, "missing_value")
 
         parser = Parser(test_config_path)
@@ -40,7 +47,7 @@ class TestParser:
         with pytest.raises(ValueError):
             parser.parse_config_file()
 
-        # Test with negative value in board size
+        # Test with negative value in lawn size
         test_config_path = os.path.join(test_configs_folder, subfolder, "negative_value")
 
         parser = Parser(test_config_path)
@@ -120,30 +127,30 @@ class TestParser:
         test_config_path = os.path.join(test_configs_folder, subfolder, "base_example")
         parser = Parser(test_config_path)
 
-        board_size, mowers = parser.parse_config_file()
-        assert board_size == (5, 5)
+        lawn_size, mowers = parser.parse_config_file()
+        assert lawn_size == (5, 5)
         assert mowers == [
             ((1, 2, "N"), ["L", "F", "L", "F", "L", "F", "L", "F", "F"]),
             ((3, 3, "E"), ["F", "F", "R", "F", "F", "R", "F", "R", "R", "F"])
         ]
 
-        # Test with a big rectangle board
-        test_config_path = os.path.join(test_configs_folder, subfolder, "big_rectangle_board")
+        # Test with a big rectangle lawn
+        test_config_path = os.path.join(test_configs_folder, subfolder, "with_big_rectangle_lawn")
         parser = Parser(test_config_path)
 
-        board_size, mowers = parser.parse_config_file()
-        assert board_size == (300, 500)
+        lawn_size, mowers = parser.parse_config_file()
+        assert lawn_size == (300, 500)
         assert mowers == [
             ((80, 236, "W"), ["L", "F", "L", "F"]),
             ((300, 378, "S"), ["F", "F", "R", "F"])
         ]
 
         # Test with many mowers
-        test_config_path = os.path.join(test_configs_folder, subfolder, "many_mowers")
+        test_config_path = os.path.join(test_configs_folder, subfolder, "with_many_mowers")
         parser = Parser(test_config_path)
 
-        board_size, mowers = parser.parse_config_file()
-        assert board_size == (10, 10)
+        lawn_size, mowers = parser.parse_config_file()
+        assert lawn_size == (10, 10)
         assert mowers == [
             ((6, 4, "N"), ["L", "F"]),
             ((3, 3, "S"), ["R", "F", "F", "R"]),

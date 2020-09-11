@@ -1,3 +1,6 @@
+from utils import AVAILABLE_INSTRUCTIONS, AVAILABLE_ORIENTATIONS
+
+
 class Parser:
 
     def __init__(self, file_path):
@@ -9,27 +12,29 @@ class Parser:
         f = open(self.file_path, "r")
         lines = f.readlines()
 
-        # Check that the config file has a correct number of lines (1 board size line and pairs of lines for mowers)
+        # Check that the config file has a correct number of lines (1 lawn size line and pairs of lines for mowers)
+        if(not len(lines)):
+            raise ValueError(f'Given configuration file {self.file_path} is empty')
         if(len(lines) % 2 != 1):
             raise ValueError(f'Given configuration file {self.file_path} has an incorrect number of lines')
 
-        # Get the first config line and split on the " " character to get the board size
-        board_size_line = lines.pop(0)
-        board_size = board_size_line.split(" ")
+        # Get the first config line and split on the " " character to get the lawn size
+        lawn_size_line = lines.pop(0)
+        lawn_size = lawn_size_line.split(" ")
 
-        # Check that the width and height values of the board are 2 positive integers
-        if(len(board_size) < 2):
-            raise ValueError(f'Given configuration file {self.file_path} has an incorrect board size (Not enough values)')
+        # Check that the width and height values of the lawn are 2 positive integers
+        if(len(lawn_size) < 2):
+            raise ValueError(f'Given configuration file {self.file_path} has an incorrect lawn size (Not enough values)')
         try:
-            width = int(board_size[0])
-            height = int(board_size[1])
+            width = int(lawn_size[0])
+            height = int(lawn_size[1])
         except ValueError:
-            print(f'Given configuration file {self.file_path} has an incorrect board size (Non-integer characters)')
+            print(f'Given configuration file {self.file_path} has an incorrect lawn size (Non-integer characters)')
             raise
         if(width < 0 or height < 0):
-            raise ValueError(f'Given configuration file {self.file_path} has an incorrect board size (negative values)')
-        # If no prior exception was raised, the board size is valid
-        board_size = (width, height)
+            raise ValueError(f'Given configuration file {self.file_path} has an incorrect lawn size (negative values)')
+        # If no prior exception was raised, the lawn size is valid
+        lawn_size = (width, height)
 
         # Get the mowers positions & instructions
         mowers = []
@@ -44,7 +49,7 @@ class Parser:
                 # Get the 3 components of the initial position
                 initial_position = initial_position_line.split('\n')[0].split(" ")
 
-                # Check that the x and y values of the mower initial position are 2 positive integers within the board
+                # Check that the x and y values of the mower initial position are 2 positive integers within the lawn
                 if(len(initial_position) < 3):
                     raise ValueError(f'Given configuration file {self.file_path} has an incorrect initial position for mower n°{mower_id}')
                 try:
@@ -53,7 +58,7 @@ class Parser:
                 except ValueError:
                     print(f'Given configuration file {self.file_path} has an incorrect initial position for mower n°{mower_id}')
                     raise
-                if(x < 0 or x > board_size[0] or y < 0 or y > board_size[1]):
+                if(x < 0 or x > lawn_size[0] or y < 0 or y > lawn_size[1]):
                     raise ValueError(f'Given configuration file {self.file_path} has an incorrect initial position for mower n°{mower_id}')
 
                 # Check that the x,y position is not already occupied by another mower
@@ -62,7 +67,7 @@ class Parser:
 
                 # Check that the direction is valid
                 direction = initial_position[2]
-                if(direction not in ["N", "E", "W", "S"]):
+                if(direction not in AVAILABLE_ORIENTATIONS):
                     raise ValueError(f'Given configuration file {self.file_path} has an incorrect initial direction for mower n°{mower_id}')
 
                 # If no prior exception was raised, the mower position and direction is valid
@@ -72,11 +77,11 @@ class Parser:
                 instructions = list(instructions_line.split('\n')[0])
                 # Check that it contains only correct characters
                 for it in instructions:
-                    if(it not in ["F", "L", "R"]):
+                    if(it not in AVAILABLE_INSTRUCTIONS):
                         raise ValueError(f'Given configuration file {self.file_path} has an incorrect instruction list for mower n°{mower_id}')
 
                 # Add this mower to the list
                 mowers.append((initial_position, instructions))
 
-        # Return the board size and the list of mowers extracted from the config file
-        return board_size, mowers
+        # Return the lawn size and the list of mowers extracted from the config file
+        return lawn_size, mowers
