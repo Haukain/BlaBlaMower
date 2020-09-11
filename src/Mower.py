@@ -1,4 +1,4 @@
-from utils import AVAILABLE_DIRECTIONS, AVAILABLE_ORIENTATIONS, next_element, previous_element
+from src.utils import AVAILABLE_DIRECTIONS, AVAILABLE_ORIENTATIONS, next_element, previous_element
 
 
 class Mower():

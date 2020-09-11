@@ -4,9 +4,9 @@ import os
 import argparse
 import logging
 
-from Parser import Parser
-from Mower import Mower
-import simulation
+from src.Parser import Parser
+from src.Mower import Mower
+from src import simulation
 
 if __name__ == "__main__":
     # Create an argument parser for the application

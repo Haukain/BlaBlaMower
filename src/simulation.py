@@ -1,16 +1,7 @@
 import os
 import logging
-# import multiprocessing
-# from functools import partial
-
-# TODO: fix multiprocessing
-# def tick(n, mower):
-#     mower.tick(n)
 
 def run(mowers, verbose_enabled=False):
-
-    # Create a pool of processes to parallelize mower execution
-    # pool = multiprocessing.Pool()
 
     for current_tick in range(0, max([len(mower.instructions_queue) for mower in mowers])):
 
@@ -18,9 +9,6 @@ def run(mowers, verbose_enabled=False):
         running_mowers = [mower for mower in mowers if len(mower.instructions_queue) > current_tick]
 
         # TODO: Add parallelization
-        # ntick = partial(tick, current_tick)
-        # pool.map(ntick, running_mowers)
-
         # Executing a new step for every mower
         for mower in running_mowers:
             mower.tick(current_tick)
