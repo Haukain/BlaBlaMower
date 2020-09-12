@@ -8,7 +8,7 @@ from src.Mower import Mower
 def mower_process(mower, out_queue, in_queue):
 
     max_tick = len(mower.instructions_queue)
-    # Loop until the end of the instructions
+    # Loop until the end of the instructions list
     for current_tick in range(0, max_tick):
         # Execute a new instruction
         mower.tick(current_tick)
@@ -25,9 +25,9 @@ def run(lawn_size, mowers_configs, verbose_enabled=False):
     # To enable the multiprocessing of mowers we have to create one process per mower
     mower_processes = []
     for i in range(len(mowers_configs)):
-        # Create a queue carrying message from the mower process to the main process
+        # Create a queue carrying messages from the mower process to the main process
         process_to_main_queue = Queue()
-        # Create a queue carrying message from the main process to the mower process
+        # Create a queue carrying messages from the main process to the mower process
         main_to_process_queue = Queue()
         # Create a mower object from the configuration
         mower = Mower(lawn_size, mowers_configs[i][0], mowers_configs[i][1])

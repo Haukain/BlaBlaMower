@@ -13,7 +13,7 @@ The moving machines have to follow these rules :
 - The mowers cannot go on a occupied square.
 If a command would break these rules, it is discarded.
 
-The simulation is ran using a configuration file following this strucure:
+The simulation is ran using a configuration file following this structure:
 - The first line corresponds to the upper right corner of the lawn.The bottom left corner is
 implicitly (0, 0).
 - The rest of the file describes the multiple mowers that are on the lawn. Each mower is described on two lines. The first line contains the mower's starting position and orientation in the format "X Y O". X and Y are the coordinates and O is the orientation. The second line contains the instructions for the mower to navigate the lawn. The instructions are not separated by spaces.
@@ -33,9 +33,9 @@ At the end of the simulation, the final positions and orientations of the mowers
 
 ## Installation
 
-First of all you'll need to download the files for this project either by cloning this repository using git or by downloading the zipped file and extracting of your computer.
+First of all you'll need to download the files for this project either by cloning this repository using git or by downloading the zipped file and extracting it on your computer.
 
-This application has been developped using Python 3.8.5. The required libraries and versions are available in the `requirements.txt` file. They can installed using either Pip or Anaconda.
+This application has been developed using Python 3.8.5. The required libraries and versions are available in the `requirements.txt` file. They can be installed using either Pip or Anaconda.
 
 ## Usage
 

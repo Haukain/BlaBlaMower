@@ -1,4 +1,3 @@
-from src.Mower import Mower
 from src import simulation
 
 
@@ -48,8 +47,8 @@ class TestSimulation:
     def test_concurrency(self):
 
         # During this example mowers will try to go on occupied positions
-        # First mower 2 were mower 1 already is
-        # Then mower 1 will want to move before mower 2 leaved the square free
+        # First mower 2 where mower 1 already is
+        # Then mower 1 will want to move before mower 2 leaves the square free
 
         lawn_size = (3, 3)
         mowers_configs = [

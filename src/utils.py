@@ -1,4 +1,4 @@
-# Storing the available orientations in the clockwise order and the delta they would apply
+# Storing the available orientations  and the delta they would apply in the clockwise order
 AVAILABLE_DIRECTIONS = {"N": (0, 1), "E": (1, 0), "S": (0, -1), "W": (-1, 0)}
 # Storing only the orientations in the clockwise order
 AVAILABLE_ORIENTATIONS = list(AVAILABLE_DIRECTIONS)

@@ -58,7 +58,7 @@ class TestParser:
 
         subfolder = "incorrect_mower_positions"
 
-        # Test with incorrect direction
+        # Test with an incorrect direction
         test_config_path = os.path.join(test_configs_folder, subfolder, "incorrect_direction")
         parser = Parser(test_config_path)
 
