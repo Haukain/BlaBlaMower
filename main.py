@@ -5,7 +5,6 @@ import argparse
 import logging
 
 from src.Parser import Parser
-from src.Mower import Mower
 from src import simulation
 
 if __name__ == "__main__":
@@ -31,20 +30,19 @@ if __name__ == "__main__":
     logging.info(f"Lawn size: {lawn_size}")
     logging.info(f"Number of mowers: {len(mowers_configs)}")
 
-    mowers = [Mower(lawn_size, mower_config[0], mower_config[1]) for mower_config in mowers_configs]
-
     # Run the simulation using the created mowers
-    # Get the final results
-    final_mowers = simulation.run(mowers, args.verbose)
+    # And get the final positions of the mowers
+    final_mowers_status = simulation.run(lawn_size, mowers_configs, args.verbose)
 
     # Saving the results in the output folder
     # And printing them if verbose is enabled
     logging.info("\nEnd Results")
     results = ""
-    for i, mower in enumerate(mowers):
+    for i, mower_status in enumerate(final_mowers_status):
         logging.info(f"Mower n°{i}")
-        logging.info(f"Position: ({mower.x}, {mower.y}), Orientation: {mower.orientation}")
-        results += f"{mower.x} {mower.y} {mower.orientation}\n"
-    with open(os.path.join(root_path, "output", config_name), "w") as f:
+        logging.info(f"Position: ({mower_status[0]}, {mower_status[1]}), Orientation: {mower_status[2]}")
+        results += f"{mower_status[0]} {mower_status[1]} {mower_status[2]}\n"
+    os.makedirs(os.path.join(root_path, "output"), exist_ok=True)
+    with open(os.path.join(root_path, "output", config_name), "w+") as f:
         f.write(results)
         f.close()
